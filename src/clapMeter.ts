@@ -7,7 +7,7 @@ const END_ANGLE = 190
 // Cooldown config
 @Component("cooldownFlag")
 class CooldownFlag {}
-const CLAP_COOLDOWN_TIME = 6000
+const CLAP_COOLDOWN_TIME = 6000 // Clap animation length
 const COOLDOWN_SPEED = 10
 
 const clapMeterArrow = new Entity()
