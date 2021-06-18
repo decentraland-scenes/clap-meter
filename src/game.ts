@@ -8,7 +8,7 @@ const base = new Entity()
 base.addComponent(new GLTFShape("models/baseDarkWithCollider.glb"))
 engine.addEntity(base)
 
-const clapMeterBoard = new ClapMeter(new GLTFShape("models/clapMeterBoard.glb"), new Transform({ position: new Vector3(8, 0.05, 8) }))
+const clapMeterBoard = new ClapMeter(new Transform({ position: new Vector3(8, 0.05, 8) }))
 
 // Listen for claps
 onPlayerExpressionObservable.add(({ expressionId }) => {
@@ -22,3 +22,5 @@ sceneMessageBus.on("updateClapMeter", () => {
   clapMeterBoard.updateCooldown()
   clapMeterBoard.updateArrow()
 })
+
+// Third person

@@ -13,10 +13,10 @@ const COOLDOWN_SPEED = 10
 const clapMeterArrow = new Entity()
 
 export class ClapMeter extends Entity {
-  constructor(model: GLTFShape, transform: Transform) {
+  constructor(transform: Transform) {
     super()
     engine.addEntity(this)
-    this.addComponent(model)
+    this.addComponent(new GLTFShape("models/clapMeterBoard.glb"))
     this.addComponent(transform)
 
     // Clap meter arrow
