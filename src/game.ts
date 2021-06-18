@@ -21,12 +21,13 @@ onPlayerExpressionObservable.add(({ expressionId }) => {
 // Update the clap meter for all players
 sceneMessageBus.on("updateClapMeter", () => {
   clapMeterBoard.updateCooldown()
-  clapMeterBoard.updateArrow()
+  clapMeterBoard.updateNeedle()
 })
 
 // UI
-const message = "For the best experience, switch to 3rd person view by pressing 'v'"
+const message = "For the best experience, \nswitch to 3rd person view by \npressing 'V' key"
 ui.displayAnnouncement(message, -1)
+
 onCameraModeChangedObservable.add(({ cameraMode }) => {
   if (cameraMode == 0) ui.displayAnnouncement(message, -1)
   if (cameraMode == 1) ui.hideAnnouncements()

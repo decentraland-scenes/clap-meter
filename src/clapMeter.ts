@@ -9,8 +9,9 @@ const END_ANGLE = 190
 class CooldownFlag {}
 const CLAP_COOLDOWN_TIME = 6000 // Clap animation length
 const COOLDOWN_SPEED = 10
+const ANGLE_INCREMENT = 1 // How many degrees does the needle move
 
-const clapMeterArrow = new Entity()
+const clapMeterNeedle = new Entity()
 
 export class ClapMeter extends Entity {
   constructor(transform: Transform) {
@@ -19,28 +20,28 @@ export class ClapMeter extends Entity {
     this.addComponent(new GLTFShape("models/clapMeterBoard.glb"))
     this.addComponent(transform)
 
-    // Clap meter arrow
-    clapMeterArrow.addComponent(new GLTFShape("models/clapMeterArrow.glb"))
-    clapMeterArrow.addComponent(new Transform({ position: new Vector3(0, 0.1, 0) }))
-    clapMeterArrow.setParent(this)
+    // Clap meter needle
+    clapMeterNeedle.addComponent(new GLTFShape("models/clapMeterNeedle.glb"))
+    clapMeterNeedle.addComponent(new Transform({ position: new Vector3(0, 0.1, 0) }))
+    clapMeterNeedle.setParent(this)
 
-    // Set arrow to start angle
-    clapMeterArrow.getComponent(Transform).rotation.setEuler(0, 0, START_ANGLE)
+    // Set needle to start angle
+    clapMeterNeedle.getComponent(Transform).rotation.setEuler(0, 0, START_ANGLE)
   }
   updateCooldown(): void {
-    clapMeterArrow.addComponentOrReplace(new CooldownFlag())
-    clapMeterArrow.addComponentOrReplace(
+    clapMeterNeedle.addComponentOrReplace(new CooldownFlag())
+    clapMeterNeedle.addComponentOrReplace(
       new utils.Delay(CLAP_COOLDOWN_TIME, () => {
-        clapMeterArrow.removeComponent(CooldownFlag)
+        clapMeterNeedle.removeComponent(CooldownFlag)
       })
     )
   }
-  updateArrow(): void {
-    let currentArrowAngle = clapMeterArrow.getComponent(Transform).rotation.eulerAngles.z
-    let currentArrowRoation = clapMeterArrow.getComponent(Transform).rotation
+  updateNeedle(): void {
+    let currentNeedleAngle = clapMeterNeedle.getComponent(Transform).rotation.eulerAngles.z
+    let currentNeedleRotation = clapMeterNeedle.getComponent(Transform).rotation
 
-    if (currentArrowAngle >= END_ANGLE) {
-      currentArrowRoation.setEuler(0, 0, currentArrowAngle - 1)
+    if (currentNeedleAngle >= END_ANGLE) {
+      currentNeedleRotation.setEuler(0, 0, currentNeedleAngle - ANGLE_INCREMENT)
     }
   }
 }
@@ -48,13 +49,13 @@ export class ClapMeter extends Entity {
 // Cooldown System
 export class CooldownSystem implements ISystem {
   update(dt: number) {
-    if (clapMeterArrow.hasComponent(CooldownFlag)) return
+    if (clapMeterNeedle.hasComponent(CooldownFlag)) return
 
-    let currentAngle = clapMeterArrow.getComponent(Transform).rotation.eulerAngles.z
-    let currentArrowRoation = clapMeterArrow.getComponent(Transform).rotation
+    let currentNeedleAngle = clapMeterNeedle.getComponent(Transform).rotation.eulerAngles.z
+    let currentNeedleRotation = clapMeterNeedle.getComponent(Transform).rotation
 
-    if (currentAngle <= START_ANGLE) {
-      currentArrowRoation.setEuler(0, 0, currentAngle + COOLDOWN_SPEED * dt)
+    if (currentNeedleAngle <= START_ANGLE) {
+      currentNeedleRotation.setEuler(0, 0, currentNeedleAngle + COOLDOWN_SPEED * dt)
     }
   }
 }
