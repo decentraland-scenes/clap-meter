@@ -22,7 +22,7 @@ export class ClapMeter extends Entity {
 
     // Clap meter needle
     clapMeterNeedle.addComponent(new GLTFShape("models/clapMeterNeedle.glb"))
-    clapMeterNeedle.addComponent(new Transform({ position: new Vector3(0, 0.1, 0) }))
+    clapMeterNeedle.addComponent(new Transform({ position: new Vector3(0, 0.05, 0) }))
     clapMeterNeedle.setParent(this)
 
     // Set needle to start angle
